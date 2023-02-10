@@ -22,6 +22,8 @@ public class BattleManager : MonoBehaviour
     int minSelectionInt;
     int selectionInt;
     public GameObject mercyMenu;
+    public GameObject damageSprite;
+    const float SIZE_INCREASE = 14f;
 
     [HideInInspector]
     public Action isFinished;
@@ -29,6 +31,7 @@ public class BattleManager : MonoBehaviour
     PlayerVars playerVariables;
     public GameObject healthMeter;
     public TextMeshPro healthTxt;
+    public float damage;
     public void Attacking()
     {
         if (!isFighting)
@@ -216,18 +219,17 @@ public class BattleManager : MonoBehaviour
     {
         isFinished = () =>
         {
+            StartCoroutine(ResizeBattleBox(new Vector2(11.5f, 3), null));
             attackMgr.attackFinished = !attackMgr.attackFinished;
             isFighting = false;
             actingMgr.actingText.gameObject.SetActive(true);
-            StartCoroutine(ScaleBox(new Vector2(11.5f, 3), null));
         };
         attackingSys.StartAttacking(playerVariables.atkValue);
         isFighting = true;
         yield return new WaitForSeconds(attackingSys.maxTime);
+        StartCoroutine(ResizeBattleBox(new Vector2(3, 3), null));
         actingMgr.actingText.gameObject.SetActive(false);
         attackMgr.StartAttack(attackMgr.attacksScriptable.GetAttack(), isFinished);
-        StartCoroutine(ScaleBox(new Vector2(3, 3), null));
-        
     }
   public IEnumerator ActingSequence()
     {
@@ -244,41 +246,55 @@ public class BattleManager : MonoBehaviour
             }
             
         };
+        soul.enabled = false;
         actingMgr.actObjects.SetActive(false);
         isFinished = () =>
         {
+            soul.enabled = true;
             soul.transform.position = buttons[1].soulPosition.position;
+            StartCoroutine(ResizeBattleBox(new Vector2(11.5f, 3.1f), boxAction));
             actingMgr.isActing = false;
             isFighting = false;
             actingMgr.actingText.gameObject.SetActive(true);
             actingMgr.actObjects.SetActive(false);
-            StartCoroutine(ScaleBox(new Vector2(11.5f, 3), boxAction));
         };
         yield return new WaitForSeconds(1);
+        StartCoroutine(ResizeBattleBox(new Vector2(3, 3), boxAction));
         actingMgr.actingText.gameObject.SetActive(false);
         actingMgr.isActing = false;
         isFighting = true;
-        StartCoroutine(ScaleBox(new Vector2(3, 3),boxAction));
         actingMgr.time = 0;
         attackMgr.StartAttack(attackMgr.attacksScriptable.GetAttack(), isFinished);
-        Debug.Log("ActingSequence end");
     }
-    IEnumerator ScaleBox(Vector2 target, Action onFinish)
+    IEnumerator ResizeBattleBox(Vector2 targetSize, Action onFinish)
     {
-        Vector2 start = battleBox.size;
+        Vector2 startSize = battleBox.size;
+        float xSign = Mathf.Sign(targetSize.x - startSize.x);
+        float ySign = Mathf.Sign(targetSize.y - startSize.y);
 
-        float maxDelta = 1f / Mathf.Max(start.x - target.x, start.y - target.y);
-
-        float t = 0;
-        while (t < 1)
+        Vector2 size = startSize;
+        Debug.Log("Initiating resizing box");
+        while (size.x != targetSize.x || size.y != targetSize.y)
         {
-            battleBox.size = Vector2.MoveTowards(start, target, maxDelta);
-            t += Time.deltaTime;
+            Debug.Log("making the box larger, i think");
+            size.x += xSign * SIZE_INCREASE * Time.deltaTime;
+            size.y += ySign * SIZE_INCREASE * Time.deltaTime;
+
+            if ((xSign == 1 && size.x > targetSize.x) || (xSign == -1 && size.x < targetSize.x))
+            {
+                size.x = targetSize.x;
+                Debug.Log("changing battlebox x size");
+            }
+            if ((ySign == 1 && size.y > targetSize.y) || (ySign == -1 && size.y < targetSize.y))
+            {
+                size.y = targetSize.y;
+                Debug.Log("changing battlebox y size");
+            }
+               
+            battleBox.size = size;
             yield return null;
         }
-
-        battleBox.size = target;
-
         onFinish?.Invoke();
+        
     }
 }

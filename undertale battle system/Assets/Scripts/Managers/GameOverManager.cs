@@ -30,17 +30,19 @@ public class GameOverManager : MonoBehaviour
     }
     IEnumerator DeathSequence()
     {
-        initiating = true;
-        player.enabled = false;
-        battleObjects.SetActive(false);
         playerSprite.color = player.GetComponent<PlayerVars>().soulOriginal;
-        playerSprite.sprite = brokenSoul;
+        initiating = true;
+        battleObjects.SetActive(false);
+        player.enabled = false;
         musicPlayer.clip = null;
+        yield return new WaitForSeconds(1);
+        playerSprite.sprite = brokenSoul;
         sfxPlayer.clip = soulBreakSfx;
         sfxPlayer.Play();
         yield return new WaitForSeconds(1.015f);
         player.GetComponent<SpriteRenderer>().enabled = false;
         deathParticles.Play();
+        yield return new WaitForSeconds(1.5f);
         musicPlayer.clip = gameOverMusic;
         musicPlayer.Play();
         gameOverScreen.SetActive(true);

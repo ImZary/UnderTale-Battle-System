@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Attacking : MonoBehaviour
 {
+    public static Attacking instance;
+    void Awake() => instance = this;
     float time;
     public float maxTime;
     public Transform pointerObject;

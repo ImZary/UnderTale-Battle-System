@@ -8,7 +8,7 @@ public class ActingManager : MonoBehaviour
 {
     int maxSelectionInt;
     int minSelectionInt;
-    int selectionInt;
+    public int selectionInt;
     bool isFighting;
     public string spareMessage;
     public List<ActingButtons> buttons;
