@@ -20,15 +20,6 @@ public class ProjectileLogic : MonoBehaviour
         this.transform.parent = pelleteParent.transform;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            player = col.gameObject.GetComponent<PlayerVars>();
-            player.TakeDamage(enemy.attackValue - player.defValue);
-            Debug.Log("The player got damaged!");
-        }    
-    }
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
