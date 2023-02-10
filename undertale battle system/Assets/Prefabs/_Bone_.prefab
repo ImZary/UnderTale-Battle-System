@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2304970306051703128}
   - component: {fileID: 2304970306051703134}
   - component: {fileID: 2304970306051703135}
-  - component: {fileID: 1637061103231379654}
   - component: {fileID: -5074346817611904223}
   m_Layer: 0
   m_Name: _Bone_
@@ -127,19 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
---- !u!114 &1637061103231379654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2304970306051703131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6f822b85bdd5c7429fb2062e9ba1dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackManager: {fileID: 0}
+  projectileSprite: []
+  shownTime: 0
 --- !u!114 &-5074346817611904223
 MonoBehaviour:
   m_ObjectHideFlags: 0
