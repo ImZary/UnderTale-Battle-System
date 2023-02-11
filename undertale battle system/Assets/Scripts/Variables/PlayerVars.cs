@@ -58,10 +58,4 @@ public class PlayerVars : MonoBehaviour
             FlashSoul();
         }
     }
-    IEnumerator Invinciblity()
-    {
-
-        
-        yield return new WaitForSeconds(2);
-    }
 }

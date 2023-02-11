@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487f5a26de708734ca6ad4128a009295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atkValue: 4
+  atkValue: 8
   defValue: 0
   health: 20
   soulFlashing: {r: 1, g: 1, b: 1, a: 0.5019608}
@@ -1174,7 +1174,6 @@ GameObject:
   - component: {fileID: 330492458}
   - component: {fileID: 330492460}
   - component: {fileID: 330492461}
-  - component: {fileID: 330492462}
   m_Layer: 0
   m_Name: Battle Manager
   m_TagString: Untagged
@@ -1243,6 +1242,9 @@ MonoBehaviour:
   rightPos: {x: 6, y: -1.47}
   isAttacking: 0
   attackBg: {fileID: 1350273222}
+  normal: {fileID: 2125741403}
+  damaged: {fileID: 1370586744}
+  damageTxt: {fileID: 412493362}
 --- !u!114 &330492461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,23 +1265,6 @@ MonoBehaviour:
   deathParticles: {fileID: 650621566}
   battleObjects: {fileID: 1404628032}
   gameOverScreen: {fileID: 591519635}
---- !u!114 &330492462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330492457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2661c08f5709e154b9c1fa6283b4a1db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageSprite: {fileID: 1370586744}
-  normalSprite: {fileID: 2125741403}
-  damageTxt: {fileID: 412493362}
-  startTakingDamage: 0
-  damageRecived: 0
 --- !u!1 &395199191
 GameObject:
   m_ObjectHideFlags: 0
@@ -8537,6 +8522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd0dcf0256e80a459f6f40388791f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionInt: 0
   spareMessage: '*Froggit seems reluctant to fight you.'
   buttons:
   - {fileID: 108116589}
@@ -9406,7 +9392,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 11.5, y: 3.1}
+  m_Size: {x: 11.5, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -9878,7 +9864,7 @@ MonoBehaviour:
   maxHP: 30
   curHP: 30
   attackValue: 4
-  defendValue: 4
+  defendValue: 2
 --- !u!114 &2125741406
 MonoBehaviour:
   m_ObjectHideFlags: 0

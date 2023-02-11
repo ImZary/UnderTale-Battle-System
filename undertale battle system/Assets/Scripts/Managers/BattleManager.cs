@@ -23,7 +23,7 @@ public class BattleManager : MonoBehaviour
     int selectionInt;
     public GameObject mercyMenu;
     public GameObject damageSprite;
-    const float SIZE_INCREASE = 14f;
+    const float SIZE_INCREASE = 16f;
 
     [HideInInspector]
     public Action isFinished;
@@ -227,13 +227,13 @@ public class BattleManager : MonoBehaviour
         attackingSys.StartAttacking(playerVariables.atkValue);
         isFighting = true;
         yield return new WaitForSeconds(attackingSys.maxTime);
+        playerVariables.transform.position = new Vector2(0, -1.7f);
         StartCoroutine(ResizeBattleBox(new Vector2(3, 3), null));
         actingMgr.actingText.gameObject.SetActive(false);
         attackMgr.StartAttack(attackMgr.attacksScriptable.GetAttack(), isFinished);
     }
   public IEnumerator ActingSequence()
     {
-        Debug.Log("ActingSequence start");
         Action boxAction = () =>
         {
             if (actingMgr.totalMercy >= actingMgr.totalMercyMax)
@@ -252,13 +252,15 @@ public class BattleManager : MonoBehaviour
         {
             soul.enabled = true;
             soul.transform.position = buttons[1].soulPosition.position;
-            StartCoroutine(ResizeBattleBox(new Vector2(11.5f, 3.1f), boxAction));
+            StartCoroutine(ResizeBattleBox(new Vector2(11.5f, 3f), boxAction));
             actingMgr.isActing = false;
             isFighting = false;
             actingMgr.actingText.gameObject.SetActive(true);
+            actingMgr.actingText.text = "";
             actingMgr.actObjects.SetActive(false);
         };
         yield return new WaitForSeconds(1);
+        playerVariables.transform.position = new Vector2(0, -1.7f);
         StartCoroutine(ResizeBattleBox(new Vector2(3, 3), boxAction));
         actingMgr.actingText.gameObject.SetActive(false);
         actingMgr.isActing = false;
@@ -273,22 +275,18 @@ public class BattleManager : MonoBehaviour
         float ySign = Mathf.Sign(targetSize.y - startSize.y);
 
         Vector2 size = startSize;
-        Debug.Log("Initiating resizing box");
         while (size.x != targetSize.x || size.y != targetSize.y)
         {
-            Debug.Log("making the box larger, i think");
             size.x += xSign * SIZE_INCREASE * Time.deltaTime;
             size.y += ySign * SIZE_INCREASE * Time.deltaTime;
 
             if ((xSign == 1 && size.x > targetSize.x) || (xSign == -1 && size.x < targetSize.x))
             {
                 size.x = targetSize.x;
-                Debug.Log("changing battlebox x size");
             }
             if ((ySign == 1 && size.y > targetSize.y) || (ySign == -1 && size.y < targetSize.y))
             {
                 size.y = targetSize.y;
-                Debug.Log("changing battlebox y size");
             }
                
             battleBox.size = size;

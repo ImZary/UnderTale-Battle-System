@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Attacking : MonoBehaviour
@@ -16,6 +17,10 @@ public class Attacking : MonoBehaviour
     public bool isAttacking;
     float playerDamage;
     [SerializeField] private SpriteRenderer attackBg;
+    public GameObject normal;
+    public GameObject damaged;
+    public TextMeshPro damageTxt;
+    float damageDealt;
 
     void Start()
     {
@@ -23,7 +28,7 @@ public class Attacking : MonoBehaviour
     }
     float PointerProgressToAttackMultiplier(float progress)
     {
-        return Mathf.Clamp01(Mathf.Min(progress * playerDamage, -progress * playerDamage + playerDamage));
+        return Mathf.Min(progress * playerDamage, -progress * playerDamage + playerDamage);
        
     }
 
@@ -42,23 +47,35 @@ public class Attacking : MonoBehaviour
                 {
                     AudioManager.instance.Slashing();
                     StartCoroutine(AfterAttack());
+                    StartCoroutine(Damage());
                 }
             }
-            
+            damageDealt = Mathf.Round(PointerProgressToAttackMultiplier(progress));
         }
     }
     public void StartAttacking(float playerDmg) 
     {
-        Debug.Log("Initiating attack");
         isAttacking = true;
         playerDamage = playerDmg;
         attackBg.enabled = true;
         pointerObject.gameObject.SetActive(true);
     }
 
+
+    IEnumerator Damage()
+    {
+        normal.SetActive(false);
+        damaged.SetActive(true);
+        damageTxt.text = damageDealt.ToString();
+        yield return new WaitForSeconds(0.5f);
+        normal.SetActive(true);
+        damaged.SetActive(false);
+        damageTxt.text = "";
+    }
+
     IEnumerator AfterAttack()
     {
-        enemy.curHP -= PointerProgressToAttackMultiplier(progress);
+        enemy.curHP -= damageDealt;
         pointerObject.position = pointerObject.position;
         isAttacking = false;
         yield return new WaitForSeconds(1);
