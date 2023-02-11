@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 556c6258a1afa584d9d05d5fb239622e
+guid: b7460681fa067444bb9c5900356da06e
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Determination Sans Web
+  - Hachicro
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -28,9 +28,4 @@ public class ProjectileLogic : MonoBehaviour
             player.TakeDamage(enemy.attackValue - player.defValue);
         }
     }
-
-    void Update()
-    {
-        GetComponent<SpriteRenderer>().sprite = projectileSprite[0];
-    }
 }

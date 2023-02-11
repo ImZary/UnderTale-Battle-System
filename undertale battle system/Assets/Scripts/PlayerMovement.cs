@@ -7,16 +7,17 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     float xMovement;
     float yMovement;
+    Rigidbody2D rb;
     void Start()
     {
-        
+        rb = this.GetComponent<Rigidbody2D>();  
     }
-    void Update()
+    void FixedUpdate()
     {
-        xMovement = Input.GetAxis("Horizontal");
-        yMovement = Input.GetAxis("Vertical");
+        xMovement = Input.GetAxisRaw("Horizontal");
+        yMovement = Input.GetAxisRaw("Vertical");
 
 
-       transform.position += new Vector3(xMovement * speed * Time.deltaTime, yMovement * speed * Time.deltaTime);
+       rb.velocity = new Vector3(xMovement * speed, yMovement * speed);
     }
 }

@@ -8,7 +8,7 @@ public class AttackManager : MonoBehaviour
 {
     public static AttackManager instance;
     void Awake() => instance = this;
-    public Pellet pelletPrefab;
+    public Pellet[] pelletPrefab;
     public Attacks attacksScriptable;
     public bool attackFinished;
 
@@ -32,9 +32,9 @@ public class AttackManager : MonoBehaviour
         }
 
     }
-    public void SpawnPellet(Vector2 position, PelletType type)
+    public void SpawnPellet(Vector2 position, PelletType type, int pelletType)
     {
-        Pellet newPellet = Instantiate(pelletPrefab, position, Quaternion.identity).GetComponent<Pellet>();
+        Pellet newPellet = Instantiate(pelletPrefab[pelletType], position, Quaternion.identity).GetComponent<Pellet>();
 
         newPellet.type = type;
         IFightObject pelletAsObj = (IFightObject)newPellet;

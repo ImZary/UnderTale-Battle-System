@@ -15,16 +15,25 @@ public class Attacks : ScriptableObject
 }
     IEnumerator FroggitOne()
     {
-        Vector2 pos = new Vector2(0, 0);
-       AttackManager.instance.SpawnPellet(pos, PelletType.FallFollowDirect);
+        Debug.Log("The Froggit1 Attack is done!");
+        
+        bool running = true;
+        while (running)
+        {
+            Vector2 pos = new Vector2(Random.Range(1.4f, -1.4f), 0);
+            AttackManager.instance.SpawnPellet(pos, PelletType.FallFollowDirect, 0);
+            yield return new WaitForSeconds(5);
+        }
+       
         yield return new WaitForSeconds(10);
-        Debug.Log("The Froggit1 Attack (attack pool side) is done!");
+        running = false;
     }
     IEnumerator FroggitTwo()
     {
-        Vector2 pos = new Vector2(0, 0);
-        AttackManager.instance.SpawnPellet(pos, PelletType.FollowDirect);
-        yield return new WaitForSeconds(10);
         Debug.Log("this is froggit's 2nd attack");
+        Vector2 pos = new Vector2(1.013f, - 2.725f);
+        AttackManager.instance.SpawnPellet(pos, PelletType.JumpDirect, 1);
+        yield return new WaitForSeconds(2);
+        
     }
 }

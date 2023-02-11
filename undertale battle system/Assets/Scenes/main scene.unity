@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2839eedb704b71c4791e799dfb5a521b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
 --- !u!212 &79503634
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1245,6 +1245,8 @@ MonoBehaviour:
   normal: {fileID: 2125741403}
   damaged: {fileID: 1370586744}
   damageTxt: {fileID: 412493362}
+  missColor: {r: 0.75686276, g: 0.75686276, b: 0.75686276, a: 1}
+  damageColor: {r: 0.9019608, g: 0.09019608, b: 0.14901961, a: 0}
 --- !u!114 &330492461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,15 +1443,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0345812597d97b14f8198a9fc8ff752e, type: 2}
-  m_sharedMaterial: {fileID: 7549234699238565070, guid: 0345812597d97b14f8198a9fc8ff752e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ab3d60b74d81e474ba9282a9e9ebe424, type: 2}
+  m_sharedMaterial: {fileID: 6883283222056349079, guid: ab3d60b74d81e474ba9282a9e9ebe424, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
     rgba: 4280686566
-  m_fontColor: {r: 0.90196085, g: 0.09019608, b: 0.14901961, a: 1}
+  m_fontColor: {r: 0.9019608, g: 0.09019608, b: 0.14901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1531,7 +1533,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7549234699238565070, guid: 0345812597d97b14f8198a9fc8ff752e, type: 2}
+  - {fileID: 6883283222056349079, guid: ab3d60b74d81e474ba9282a9e9ebe424, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9877,7 +9879,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f899180a942e3224faef8078b5df03ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pelletPrefab: {fileID: 4133584927210783087, guid: 787bf68a2b014f047a39afe22c9ba226, type: 3}
+  pelletPrefab:
+  - {fileID: 4133584927210783087, guid: 787bf68a2b014f047a39afe22c9ba226, type: 3}
+  - {fileID: 4133584927210783087, guid: bade77a08c3db84468630971823442c7, type: 3}
   attacksScriptable: {fileID: 11400000, guid: 157dd330094adab4f8fe2ed9055206c6, type: 2}
   attackFinished: 1
 --- !u!4 &2125741407

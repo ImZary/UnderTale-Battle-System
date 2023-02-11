@@ -10,7 +10,6 @@ public class Pellet : MonoBehaviour, IFightObject
     private float time;
     public void Spawn()
     {
-     
     }
 
     public void Tick()
@@ -22,12 +21,21 @@ public class Pellet : MonoBehaviour, IFightObject
             HandleFollowDirect();
         else if (type == PelletType.FallFollowDirect)
             HandleFall();
+        if (type == PelletType.JumpDirect)
+            JumpDirect();
     }
     void HandleFollowDirect()
     {
         transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, Time.deltaTime);
     }
 
+    void JumpDirect()
+    {
+        if (time < 1)
+            return;
+        else
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(playerTransform.position.x, transform.position.y * -2) , Time.deltaTime * 2);
+    }
     void HandleFall()
     {
         if (time < 1)
@@ -35,6 +43,7 @@ public class Pellet : MonoBehaviour, IFightObject
         else
             HandleFollowDirect();
     }
+
 
     public void Remove()
     {

@@ -9,18 +9,22 @@ public class Attacking : MonoBehaviour
     void Awake() => instance = this;
     float time;
     public float maxTime;
+    float progress;
+    float playerDamage;
+    float damageDealt;
+
     public Transform pointerObject;
     public Vector2 leftPos;
     public Vector2 rightPos;
-    float progress;
     EnemyVars enemy;
     public bool isAttacking;
-    float playerDamage;
     [SerializeField] private SpriteRenderer attackBg;
     public GameObject normal;
     public GameObject damaged;
     public TextMeshPro damageTxt;
-    float damageDealt;
+    public Color missColor;
+    public Color damageColor;
+
 
     void Start()
     {
@@ -28,13 +32,13 @@ public class Attacking : MonoBehaviour
     }
     float PointerProgressToAttackMultiplier(float progress)
     {
-        return Mathf.Min(progress * playerDamage, -progress * playerDamage + playerDamage);
-       
+        return Mathf.Min(progress * (playerDamage * 2), (1 - progress) * (playerDamage * 2));
     }
 
     void Update()
     {
-       
+        damageDealt = Mathf.Round(PointerProgressToAttackMultiplier(progress)) - enemy.defendValue;
+        
         if (isAttacking)
         {
             progress = time / maxTime;
@@ -50,7 +54,7 @@ public class Attacking : MonoBehaviour
                     StartCoroutine(Damage());
                 }
             }
-            damageDealt = Mathf.Round(PointerProgressToAttackMultiplier(progress));
+            
         }
     }
     public void StartAttacking(float playerDmg) 
@@ -66,17 +70,29 @@ public class Attacking : MonoBehaviour
     {
         normal.SetActive(false);
         damaged.SetActive(true);
-        damageTxt.text = damageDealt.ToString();
+        if (damageDealt <= 0)
+        {
+            damageTxt.text = "MISS";
+            damageTxt.color = missColor;
+        }
+
+        if (damageDealt > 0)
+        {
+            damageTxt.text = damageDealt.ToString();
+        }
         yield return new WaitForSeconds(0.5f);
         normal.SetActive(true);
         damaged.SetActive(false);
         damageTxt.text = "";
+        damageTxt.color = damageColor;
     }
 
     IEnumerator AfterAttack()
     {
-        enemy.curHP -= damageDealt;
-        pointerObject.position = pointerObject.position;
+        if (damageDealt > 0)
+        {
+            enemy.curHP -= damageDealt;
+        }
         isAttacking = false;
         yield return new WaitForSeconds(1);
         attackBg.enabled = false;
