@@ -30,6 +30,7 @@ public class GameOverManager : MonoBehaviour
     }
     IEnumerator DeathSequence()
     {
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         playerSprite.color = player.GetComponent<PlayerVars>().soulOriginal;
         initiating = true;
         battleObjects.SetActive(false);

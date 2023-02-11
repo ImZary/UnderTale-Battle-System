@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class ActingManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class ActingManager : MonoBehaviour
     public int totalMercyMax;
     public List<string> flavorText;
     public float time;
+    public bool canAct = true;
     void Start()
     {
         isFighting = BattleManager.battleInstance.isFighting;
@@ -56,12 +58,18 @@ public class ActingManager : MonoBehaviour
             }
             Selection();
             time += Time.deltaTime;
-            if (time > 0.1f)
+            if (time > 0.25f)
             {
-                if (Input.GetKeyDown(KeyCode.Return))
+                if(canAct)
                 {
-                    Selected();
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        canAct = false;
+                        Selected();
+                    }
                 }
+            
+                
             }
            
         }
@@ -148,11 +156,23 @@ public class ActingManager : MonoBehaviour
     }
     public void OnActing(int selectedInt)
     {
+        canAct = false;
         buttons[selectedInt].actVars.curMercy += buttons[selectedInt].actVars.mercyValue[0];
         actingText.gameObject.SetActive(true);
         actingText.text = buttons[selectedInt].actVars.actTxt[0];
-        buttons[selectedInt].actVars.actTxt.RemoveAt(0);
-        buttons[selectedInt].actVars.mercyValue.RemoveAt(0);
+        if (buttons[selectedInt].actVars.actTxt.Count <= 2 || buttons[selectedInt].actVars.mercyValue.Count <= 2)
+        {
+            Debug.Log("We added");
+            buttons[selectedInt].actVars.actTxt.Add(buttons[selectedInt].actVars.actTxt[0]);
+            buttons[selectedInt].actVars.mercyValue.Add(buttons[selectedInt].actVars.mercyValue[0]);
+        }
+        else
+        {
+            buttons[selectedInt].actVars.actTxt.RemoveAt(0);
+            buttons[selectedInt].actVars.mercyValue.RemoveAt(0);
+        }
+
         StartCoroutine(BattleManager.battleInstance.ActingSequence());
     }
+
 }

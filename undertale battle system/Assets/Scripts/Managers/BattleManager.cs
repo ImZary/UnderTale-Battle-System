@@ -253,6 +253,7 @@ public class BattleManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator AttackSequence()
     {
+        isFighting = true;
         //The action that will get called once we finish resizing the battle box
         Action onBoxFinish = () =>
         {
@@ -269,7 +270,6 @@ public class BattleManager : MonoBehaviour
         attackingSys.StartAttacking(playerVariables.atkValue);
         //Setting the fight bool to true;
         playerVariables.GetComponent<SpriteRenderer>().enabled = false;
-        isFighting = true;
         yield return new WaitForSeconds(attackingSys.maxTime);
         //Once we finish waiting for the player to attack, we move the player's soul to the middle of the battle box.
         playerVariables.transform.position = new Vector2(0, -1.7f);
@@ -309,6 +309,7 @@ public class BattleManager : MonoBehaviour
             actingMgr.actingText.gameObject.SetActive(true);
             actingMgr.actingText.text = "";
             actingMgr.actObjects.SetActive(false);
+            actingMgr.canAct = true;
         };
         yield return new WaitForSeconds(1);
         playerVariables.transform.position = new Vector2(0, -1.7f);

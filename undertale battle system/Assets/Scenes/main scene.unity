@@ -367,8 +367,11 @@ MonoBehaviour:
   - '*FROGGIT - ATK 4 DEF 5, Life is difficult for this enemy'
   - '*FROGGIT - ATK 4 DEF 5, Life is difficult for this enemy'
   - '*FROGGIT - ATK 4 DEF 5, Life is difficult for this enemy'
-  mercyValue: 000000000000000000000000000000000000000000000000
-  mercyMax: -1
+  - '*FROGGIT - ATK 4 DEF 5, Life is difficult for this enemy'
+  - '*FROGGIT - ATK 4 DEF 5, Life is difficult for this enemy'
+  - '*FROGGIT - ATK 4 DEF 5, Life is difficult for this enemy'
+  mercyValue: 000000000000000000000000000000000000000000000000000000000000000000000000
+  mercyMax: 0
   curMercy: 0
 --- !u!114 &108116592
 MonoBehaviour:
@@ -805,10 +808,10 @@ MonoBehaviour:
   - '*Froggit is too frustrated to fight back.'
   - '*Froggit is too frustrated to fight back.'
   - '*Froggit is tired of your aimless shenanigans'
-  - ...
-  - ...
-  - ...
-  - ...
+  - '*...'
+  - '*...'
+  - '*...'
+  - '*Froggit''s thinking about it''s life choices.'
   mercyValue: 140000001400000014000000140000001400000014000000140000001400000014000000
   mercyMax: 1
   curMercy: 0
@@ -1022,9 +1025,9 @@ MonoBehaviour:
   - '*Froggit is too scared to fight'
   - '*Froggit is too scared to fight'
   - '*Froggit is tired of your aimless shenanigans'
-  - ...
-  - ...
-  - ...
+  - '*...'
+  - '*...'
+  - '*Froggit''s proud to be brave enough to be scared of you.'
   mercyValue: 020000000200000002000000020000000200000002000000020000000200000002000000
   mercyMax: 1
   curMercy: 0
@@ -8719,6 +8722,7 @@ MonoBehaviour:
   - '*Froggit doesn''t seem to know why it''s here. '
   - '*You are intimidated by Froggit''s raw strength.'
   time: 0
+  canAct: 1
 --- !u!4 &1529661599
 Transform:
   m_ObjectHideFlags: 0
@@ -9364,9 +9368,9 @@ MonoBehaviour:
   - '*Froggit is too flattered to fight back.'
   - '*Froggit is too flattered to fight back.'
   - '*Froggit is tired of your aimless shenanigans'
-  - ...
-  - ...
-  - ...
+  - '*...'
+  - '*...'
+  - '*Froggit''s glad it didn''t get raised into a human like you.'
   mercyValue: 040000000400000004000000040000000400000004000000040000000400000004000000
   mercyMax: 1
   curMercy: 0
