@@ -15,18 +15,13 @@ public class Attacks : ScriptableObject
 }
     IEnumerator FroggitOne()
     {
-        Debug.Log("The Froggit1 Attack is done!");
+        AttackManager.instance.SpawnPellet(new Vector2(Random.Range(1.4f, -1.4f), 0), PelletType.FallFollowDirect, 0);
+        yield return new WaitForSeconds(1);
+        AttackManager.instance.SpawnPellet(new Vector2(Random.Range(1.4f, -1.4f), 0), PelletType.FallFollowDirect, 0);
+        yield return new WaitForSeconds(1);
+        AttackManager.instance.SpawnPellet(new Vector2(Random.Range(1.4f, -1.4f), 0), PelletType.FallFollowDirect, 0);
+        yield return new WaitForSeconds(5);
         
-        bool running = true;
-        while (running)
-        {
-            Vector2 pos = new Vector2(Random.Range(1.4f, -1.4f), 0);
-            AttackManager.instance.SpawnPellet(pos, PelletType.FallFollowDirect, 0);
-            yield return new WaitForSeconds(5);
-        }
-       
-        yield return new WaitForSeconds(10);
-        running = false;
     }
     IEnumerator FroggitTwo()
     {

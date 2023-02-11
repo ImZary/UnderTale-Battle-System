@@ -1246,7 +1246,7 @@ MonoBehaviour:
   damaged: {fileID: 1370586744}
   damageTxt: {fileID: 412493362}
   missColor: {r: 0.75686276, g: 0.75686276, b: 0.75686276, a: 1}
-  damageColor: {r: 0.9019608, g: 0.09019608, b: 0.14901961, a: 0}
+  damageColor: {r: 0.9019608, g: 0.09019608, b: 0.14901961, a: 1}
 --- !u!114 &330492461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1879,7 +1879,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -152
   m_Sprite: {fileID: 906252078, guid: ab753d6071724b540bd9293a4170239f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

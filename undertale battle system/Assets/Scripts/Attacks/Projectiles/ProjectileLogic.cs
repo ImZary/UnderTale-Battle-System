@@ -20,7 +20,7 @@ public class ProjectileLogic : MonoBehaviour
         this.transform.parent = pelleteParent.transform;
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {

@@ -48,11 +48,11 @@ public class ActingManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                selectionInt--;
+                selectionInt -= 2;
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                selectionInt++;
+                selectionInt += 2;
             }
             Selection();
             time += Time.deltaTime;
