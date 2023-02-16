@@ -24,6 +24,7 @@ public class BattleManager : MonoBehaviour
     public GameObject mercyMenu;
     public GameObject damageSprite;
     const float SIZE_INCREASE = 18f;
+    public List<string> enemyDialogue;
 
     [HideInInspector]
     public Action isFinished;
@@ -60,7 +61,11 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     public void Item()
     {
-        Debug.Log("We're using an item :o");
+        ItemManager.instance.isMenu = true;
+        ItemManager.instance.canAct = true;
+        isFighting = false;
+        ItemManager.instance.itemObjects.SetActive(true);
+        ItemManager.instance.useText.gameObject.SetActive(false);
         audioMgr.Selecting();
     }
     /// <summary>
@@ -70,7 +75,8 @@ public class BattleManager : MonoBehaviour
     {
         if (actingMgr.totalMercy >= actingMgr.totalMercyMax)
         {
-            Debug.Log("Battle Ended");
+            DialogueManager.instance.enemyTxt = "*Blushes Deeply*";
+            DialogueManager.instance.Talking(null);
             audioMgr.Selecting();
         }
     }
@@ -88,7 +94,7 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
         //when the player is not fighting nor acting, these if statements get called
-        if (!isFighting && !actingMgr.isActing)
+        if (!isFighting && !actingMgr.isActing && !ItemManager.instance.isMenu)
         {
             if (selectionInt > maxSelectionInt)
             {
@@ -286,18 +292,17 @@ public class BattleManager : MonoBehaviour
             //A pretty simple system, it checks for our mercy value, if we meet the requirement for sparing, a spare message appears, otherwise you'll get a new flavour text.
             if (actingMgr.totalMercy >= actingMgr.totalMercyMax)
             {
-                actingMgr.actingText.text = actingMgr.spareMessage;
+                DialogueManager.instance.dialogueTxt = actingMgr.spareMessage;
             }
             else
             {
-                actingMgr.actingText.text = actingMgr.flavorText[UnityEngine.Random.Range(0, actingMgr.flavorText.Capacity)];
+                DialogueManager.instance.dialogueTxt = actingMgr.flavorText[UnityEngine.Random.Range(0, actingMgr.flavorText.Capacity)];
             }
             
         };
         //The selection soul, gets disabled in preperation for the attack this round.
         soul.enabled = false;
         //The acting menu gets disabled, as we are about to start the round.
-        actingMgr.actObjects.SetActive(false);
         //Action that gets called once we finish the round.
         isFinished = () =>
         {
@@ -307,9 +312,10 @@ public class BattleManager : MonoBehaviour
             actingMgr.isActing = false;
             isFighting = false;
             actingMgr.actingText.gameObject.SetActive(true);
-            actingMgr.actingText.text = "";
+            DialogueManager.instance.Talking(null);
             actingMgr.actObjects.SetActive(false);
             actingMgr.canAct = true;
+
         };
         yield return new WaitForSeconds(1);
         playerVariables.transform.position = new Vector2(0, -1.7f);
@@ -317,6 +323,46 @@ public class BattleManager : MonoBehaviour
         actingMgr.actingText.gameObject.SetActive(false);
         actingMgr.isActing = false;
         isFighting = true;
+        actingMgr.time = 0;
+        attackMgr.StartAttack(attackMgr.attacksScriptable.GetAttack(), isFinished);
+    }
+
+    public IEnumerator ItemSequence()
+    {
+        //The selection soul, gets disabled in preperation for the attack this round.
+        soul.enabled = false;
+        //The acting menu gets disabled, as we are about to start the round.
+        //Action that gets called once we finish the round.
+        isFinished = () =>
+        {
+            if (actingMgr.totalMercy >= actingMgr.totalMercyMax)
+            {
+                DialogueManager.instance.dialogueTxt = actingMgr.spareMessage;
+            }
+            else
+            {
+                DialogueManager.instance.dialogueTxt = actingMgr.flavorText[UnityEngine.Random.Range(0, actingMgr.flavorText.Capacity)];
+            }
+            ItemManager.instance.time = 0;
+            soul.enabled = true;
+            soul.transform.position = buttons[2].soulPosition.position;
+            StartCoroutine(ResizeBattleBox(new Vector2(11.5f, 3f), null));
+            actingMgr.isActing = false;
+            isFighting = false;
+            actingMgr.actingText.gameObject.SetActive(true);
+            DialogueManager.instance.Talking(null);
+            actingMgr.actObjects.SetActive(false);
+            ItemManager.instance.itemObjects.SetActive(false);
+            actingMgr.canAct = true;
+
+        };
+        yield return new WaitForSeconds(1);
+        playerVariables.transform.position = new Vector2(0, -1.7f);
+        StartCoroutine(ResizeBattleBox(new Vector2(3, 3), null));
+        ItemManager.instance.itemObjects.SetActive(false);
+        isFighting = true;
+        ItemManager.instance.isMenu = false;
+        ItemManager.instance.useText.text = "";
         actingMgr.time = 0;
         attackMgr.StartAttack(attackMgr.attacksScriptable.GetAttack(), isFinished);
     }

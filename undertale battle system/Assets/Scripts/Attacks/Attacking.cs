@@ -12,7 +12,11 @@ public class Attacking : MonoBehaviour
     float progress;
     float playerDamage;
     float damageDealt;
-
+    float curTime;
+    bool flicker;
+    bool finished = true;
+    public Sprite original;
+    public Sprite reverse;
     public Transform pointerObject;
     public Vector2 leftPos;
     public Vector2 rightPos;
@@ -35,14 +39,19 @@ public class Attacking : MonoBehaviour
         return Mathf.Min(progress * (playerDamage * 2), (1 - progress) * (playerDamage * 2));
     }
 
+
     void Update()
     {
         damageDealt = Mathf.Round(PointerProgressToAttackMultiplier(progress)) - enemy.defendValue;
+        if (!finished)
+        {
+            curTime += Time.deltaTime;
+        }
         
         if (isAttacking)
         {
             progress = time / maxTime;
-            pointerObject.position = Vector2.Lerp(leftPos, rightPos, progress);
+            pointerObject.position = Vector2.Lerp(leftPos, rightPos, progress * 1.2f);
 
             time += Time.deltaTime;
             if (time > 0.1f)
@@ -50,11 +59,13 @@ public class Attacking : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     AudioManager.instance.Slashing();
+                    curTime = 0;
+                    finished = false;
+                    StartCoroutine(Flashing());
                     StartCoroutine(AfterAttack());
                     StartCoroutine(Damage());
                 }
             }
-            
         }
     }
     public void StartAttacking(float playerDmg) 
@@ -100,5 +111,17 @@ public class Attacking : MonoBehaviour
         time = 0;
         leftPos.x = leftPos.x * -1;
         rightPos.x = rightPos.x * -1;
+    }
+    IEnumerator Flashing()
+    {
+        while (curTime < 0.75f)
+        {
+            flicker = !flicker;
+            pointerObject.GetComponent<SpriteRenderer>().sprite = flicker ? original : reverse;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+        pointerObject.GetComponent<SpriteRenderer>().sprite = original; // Default pointer
+        finished = true;
     }
 }

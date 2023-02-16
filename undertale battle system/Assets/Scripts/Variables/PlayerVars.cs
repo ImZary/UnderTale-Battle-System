@@ -17,6 +17,12 @@ public class PlayerVars : MonoBehaviour
     public float maxTime;
     [SerializeField] private SpriteRenderer soulSprite;
     bool invincible;
+    [HideInInspector]
+    public static PlayerVars instance;
+    void Awake() => instance = this;
+
+
+
     void Start()
     {
         soulAlpha = soulSprite.color.a;

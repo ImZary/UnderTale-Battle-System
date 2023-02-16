@@ -73,6 +73,7 @@ public class ActingManager : MonoBehaviour
             }
            
         }
+        
     }
 
     void Selecting(int selectedInt)
@@ -159,7 +160,17 @@ public class ActingManager : MonoBehaviour
         canAct = false;
         buttons[selectedInt].actVars.curMercy += buttons[selectedInt].actVars.mercyValue[0];
         actingText.gameObject.SetActive(true);
-        actingText.text = buttons[selectedInt].actVars.actTxt[0];
+        DialogueManager.instance.dialogueTxt = buttons[selectedInt].actVars.actTxt[0];
+        Action doneTalking = () =>
+        {
+            Debug.Log("action initiated");
+            DialogueManager.instance.shouldTalk = false;
+            StartCoroutine(BattleManager.battleInstance.ActingSequence());
+        };
+        DialogueManager.instance.enemyTxt = BattleManager.battleInstance.enemyDialogue[UnityEngine.Random.Range(0, BattleManager.battleInstance.enemyDialogue.Count)];
+        DialogueManager.instance.shouldTalk = true;
+        DialogueManager.instance.Talking(doneTalking);
+        actObjects.SetActive(false);
         if (buttons[selectedInt].actVars.actTxt.Count <= 2 || buttons[selectedInt].actVars.mercyValue.Count <= 2)
         {
             Debug.Log("We added");
@@ -171,8 +182,7 @@ public class ActingManager : MonoBehaviour
             buttons[selectedInt].actVars.actTxt.RemoveAt(0);
             buttons[selectedInt].actVars.mercyValue.RemoveAt(0);
         }
-
-        StartCoroutine(BattleManager.battleInstance.ActingSequence());
     }
+
 
 }
